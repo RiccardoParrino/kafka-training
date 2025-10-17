@@ -8,15 +8,10 @@ spring:
     kafka:
         bootstrap-server: localhost:9092
         consumer:
-            group-id: my-group
-            auto-offset-reset: earliest
-            value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
             properties:
                 spring.json.trusted.packages: com.parrino.riccardo.inventory.dto.*
         producer:
-            value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
             properties:
                 spring.json.add.type.headers: false
-                spring.json.trusted.packages: com.parrino.riccardo.inventory.dto.InventoryRequest
             
 
