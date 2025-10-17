@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-InventoryApplication<inventory>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.parrino.riccardo.inventory.InventoryApplication",
+            "projectName": "inventory",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-OrderApplication<order>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.parrino.riccardo.order.OrderApplication",
+            "projectName": "order",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

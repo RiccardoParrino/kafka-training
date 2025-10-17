@@ -6,7 +6,7 @@ import org.springframework.kafka.support.serializer.JsonSerde;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.parrino.riccardo.inventory.dto.InventoryRequest;
+import com.parrino.riccardo.dto.InventoryRequest;
 
 @Component
 public class KafkaConfig {

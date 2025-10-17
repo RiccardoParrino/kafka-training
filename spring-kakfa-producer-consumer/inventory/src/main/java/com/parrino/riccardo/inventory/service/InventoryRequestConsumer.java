@@ -5,7 +5,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import com.parrino.riccardo.inventory.dto.InventoryRequest;
+import com.parrino.riccardo.dto.InventoryRequest;
 import com.parrino.riccardo.inventory.dto.InventoryResponse;
 
 @Service
