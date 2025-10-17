@@ -12,8 +12,8 @@ public class OrderProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void sendOrder(String orderJson) {
-        kafkaTemplate.send("orders", orderJson);
+    public void verifyInventory(Long productId) {
+        kafkaTemplate.send("inventory", String.valueOf(productId));
     }
 
 }
