@@ -1,4 +1,4 @@
-package com.parrino.riccardo.order.dto;
+package com.parrino.riccardo.inventory.dto;
 
 import lombok.Builder;
 import lombok.Getter;
