@@ -3,6 +3,7 @@ package com.parrino.riccardo.inventory.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
 import com.parrino.riccardo.dto.InventoryRequest;
@@ -15,7 +16,7 @@ public class InventoryRequestConsumer {
     private KafkaTemplate<String, InventoryResponse> kafkaTemplate;
 
     @KafkaListener(topics = "inventory-request", groupId = "inventory-service")
-    public void handleInventoryCheck(InventoryRequest request) {
+    public void handleInventoryCheck(@Payload InventoryRequest request) {
         boolean available = checkAvailability(request.getProductId(), request.getQuantity());
 
         InventoryResponse response = InventoryResponse.builder()

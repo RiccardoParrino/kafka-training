@@ -9,7 +9,8 @@ spring:
         bootstrap-server: localhost:9092
         consumer:
             properties:
-                spring.json.trusted.packages: com.parrino.riccardo.inventory.dto.*
+                spring.json.value.default.type: com.parrino.riccardo.dto.InventoryRequest
+                spring.json.trusted.packages: com.parrino.riccardo.dto
         producer:
             properties:
                 spring.json.add.type.headers: false
