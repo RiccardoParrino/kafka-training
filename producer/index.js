@@ -7,16 +7,27 @@ const kafka = new Kafka({
 
 const producer = kafka.producer();
 
-const produceMessage = async () => {
+const produceMessageTopic1 = async () => {
     await producer.connect();
     await producer.send({
-        topic: 'my-topic-2',
+        topic: 'topic-1',
         messages: [
-            {value: 'Hello from Kafka producer'}
+            {value: 'Hello from topic 1'}
         ],
     });
     console.log('Message sent!');
     await producer.disconnect();
 };
 
-produceMessage().catch(console.error)
+const produceMessageTopic2 = async() => {
+    await producer.connect();
+    await producer.send({
+        topic: 'topic-2',
+        messages: [
+            {value: 'Hello from topic 2'}
+        ]
+    })
+}
+
+produceMessageTopic2().catch(console.error)
+produceMessageTopic1().catch(console.error)

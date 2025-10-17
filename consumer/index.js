@@ -7,10 +7,10 @@ const kafka = new Kafka({
 
 const consumer = kafka.consumer({groupId:'my-group'})
 
-const consumeMessages = async () => {
+const consumeMessagesTopic1 = async () => {
     await consumer.connect();
     await consumer.subscribe({
-        topic: 'my-topic',
+        topic: 'topic-1',
         fromBeginning: true
     });
 
@@ -23,4 +23,22 @@ const consumeMessages = async () => {
     })
 }
 
-consumeMessages().catch(console.error)
+const consumeMessagesTopic2 = async () => {
+    await consumer.connect()
+    await consumer.subscribe({
+        topic: 'topic-2',
+        fromBeginning: true
+    })
+    await consumer.run({
+        eachMessage: async ({topic, partition, message}) => {
+            console.log(
+                topic + " " +
+                partition + " " + 
+                message.value.toString()
+            )
+        }
+    })
+}
+
+consumeMessagesTopic1().catch(console.error)
+consumeMessagesTopic2().catch(console.error)
