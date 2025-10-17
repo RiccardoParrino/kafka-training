@@ -10,7 +10,7 @@ const producer = kafka.producer();
 const produceMessage = async () => {
     await producer.connect();
     await producer.send({
-        topic: 'my-topic',
+        topic: 'my-topic-2',
         messages: [
             {value: 'Hello from Kafka producer'}
         ],
