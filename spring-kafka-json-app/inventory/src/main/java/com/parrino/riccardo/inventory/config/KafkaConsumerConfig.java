@@ -2,7 +2,6 @@ package com.parrino.riccardo.inventory.config;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -14,7 +13,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
-import com.parrino.riccardo.inventory.dto.InventoryRequest;
+import com.parrino.riccardo.dto.InventoryRequest;
 
 @EnableKafka
 @Configuration

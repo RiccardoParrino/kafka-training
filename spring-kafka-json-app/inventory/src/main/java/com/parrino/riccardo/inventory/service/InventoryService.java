@@ -3,7 +3,7 @@ package com.parrino.riccardo.inventory.service;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import com.parrino.riccardo.inventory.dto.InventoryRequest;
+import com.parrino.riccardo.dto.InventoryRequest;
 
 @Service
 public class InventoryService {
