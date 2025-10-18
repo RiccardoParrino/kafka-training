@@ -1,14 +1,2 @@
 server:
     port: 8082
-
-spring:
-    kafka:
-        bootstrap-servers: localhost:9092
-        properties:
-            schema.registry.url: http://localhost:8082
-            specific.avro.reader: true
-        consumer:
-            group-id: inventory-consumer-group
-            key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-            value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
-
