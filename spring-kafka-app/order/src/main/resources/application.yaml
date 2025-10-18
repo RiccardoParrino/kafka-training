@@ -4,11 +4,3 @@ server:
 spring:
     application:
         name: order
-    kafka:
-        bootstrap-servers: localhost:9092
-        properties:
-            schema.registry.url: http://localhost:8081
-            specific.avro.reader: true
-        producer:
-            key-serializer: org.apache.kafka.common.serialization.StringSerializer
-            value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
