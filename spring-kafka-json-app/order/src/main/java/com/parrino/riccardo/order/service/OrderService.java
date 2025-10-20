@@ -35,22 +35,30 @@ public class OrderService {
         responseFutures.put(collaborationIdUUID, future);
 
         kafkaTemplate.send("inventory-request", collaborationIdUUID, inventoryRequest);       
+    
+        try {
+
+            InventoryResponse inventoryResponse = future.get(1, TimeUnit.MINUTES);
+
+            if (inventoryResponse.getAvailable()) {
+                System.out.println("Product is available!");
+            } else {
+                System.out.println("Product is NOT available or Inventory is temporarily busy!");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Inventory ms times out!");
+        } finally {
+
+        }
     }
 
     @KafkaListener(topics = "inventory-response", groupId = "inventory-response-consumer")
-    public void handleInventoryResponse (Object message) {
-
-        if (message instanceof InventoryRequest) {
-            System.out.println("InvetoryRequest message");
-        } 
-
-        if (message instanceof InventoryResponse) {
-            System.out.println("InventoryResponse message");
-            InventoryResponse inventoryResponse = (InventoryResponse) message;
-            CompletableFuture<InventoryResponse> future = responseFutures.remove(inventoryResponse.getCollaborationId());
-            if (future != null)
-                future.complete(inventoryResponse);
-        }
+    public void handleInventoryResponse (InventoryResponse inventoryResponse) {
+        System.out.println("InventoryResponse message");
+        CompletableFuture<InventoryResponse> future = responseFutures.remove(inventoryResponse.getCollaborationId());
+        if (future != null)
+            future.complete(inventoryResponse);
 
     }
 
