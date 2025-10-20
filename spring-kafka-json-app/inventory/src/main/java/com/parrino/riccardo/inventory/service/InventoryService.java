@@ -10,14 +10,11 @@ import com.parrino.riccardo.dto.InventoryResponse;
 
 @Service
 public class InventoryService {
-    
-    private static final String TOPIC = "inventory-service";
-    private static final String GROUP = "inventory-group";
 
     @Autowired
     private KafkaTemplate<String, InventoryResponse> kafkaTemplate;
 
-    @KafkaListener(topics = TOPIC, groupId = GROUP)
+    @KafkaListener(topics = "inventory-request", groupId = "inventory-request-consumer")
     public void inventoryService (InventoryRequest inventoryRequest) {
         System.out.println("Received: ");
         System.out.println("Order: " + inventoryRequest.getOrderId());
@@ -33,7 +30,7 @@ public class InventoryService {
             .collaborationId(inventoryRequest.getCollaborationId())
         .build();
 
-        kafkaTemplate.send(TOPIC, inventoryRequest.getCollaborationId(), inventoryResponse);
+        kafkaTemplate.send("inventory-response", inventoryRequest.getCollaborationId(), inventoryResponse);
     }
 
     private boolean checkAvailability (Long productId, Integer quantity) {

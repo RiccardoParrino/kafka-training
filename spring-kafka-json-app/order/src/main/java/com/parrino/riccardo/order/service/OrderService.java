@@ -16,9 +16,6 @@ import com.parrino.riccardo.dto.InventoryResponse;
 
 @Service
 public class OrderService {
-    
-    private static final String TOPIC = "inventory-service";
-    private static final String GROUP = "inventory-group";
 
     Map<String, CompletableFuture<InventoryResponse>> responseFutures = new ConcurrentHashMap<>();
 
@@ -37,29 +34,24 @@ public class OrderService {
         CompletableFuture<InventoryResponse> future = new CompletableFuture<>();
         responseFutures.put(collaborationIdUUID, future);
 
-        kafkaTemplate.send(TOPIC, collaborationIdUUID, inventoryRequest);
-        
-        try {
-            InventoryResponse inventoryResponse = future.get(5, TimeUnit.SECONDS);
-
-            if (inventoryResponse.getAvailable()) {
-                System.out.println("Availability true. You can proceed with the payment!");
-            } else {
-                System.out.println("Product not available. Reduce the quantity or try with another product.");
-            }
-        } catch (Exception e) {
-            System.out.println("Timeout or error: the inventory is temporarily unreacheable. Try a little bit later!");
-        } finally {
-            responseFutures.remove(inventoryRequest.getCollaborationId());
-        }
-        
+        kafkaTemplate.send("inventory-request", collaborationIdUUID, inventoryRequest);       
     }
 
-    @KafkaListener(topics = TOPIC, groupId = GROUP)
-    public void handleInventoryResponse (InventoryResponse inventoryResponse) {
-        CompletableFuture<InventoryResponse> future = responseFutures.remove(inventoryResponse.getCollaborationId());
-        if (future != null)
-            future.complete(inventoryResponse);
+    @KafkaListener(topics = "inventory-response", groupId = "inventory-response-consumer")
+    public void handleInventoryResponse (Object message) {
+
+        if (message instanceof InventoryRequest) {
+            System.out.println("InvetoryRequest message");
+        } 
+
+        if (message instanceof InventoryResponse) {
+            System.out.println("InventoryResponse message");
+            InventoryResponse inventoryResponse = (InventoryResponse) message;
+            CompletableFuture<InventoryResponse> future = responseFutures.remove(inventoryResponse.getCollaborationId());
+            if (future != null)
+                future.complete(inventoryResponse);
+        }
+
     }
 
 }
