@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.parrino.riccardo.dto.InventoryRequest;
 
 @Service
-public class InventoryRequestProducer {
+public class OrderService {
     
     private static final String TOPIC = "inventory-service";
 
